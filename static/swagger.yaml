@@ -1,0 +1,751 @@
+swagger: "2.0"
+info:
+  title: "E-Commerce API"
+  description: "API to manage an E-Commerce Application"
+  version: "1.0.0"
+host: "127.0.0.1:5000"
+schemes:
+  - "http"
+consumes: 
+  - "application/json"
+produces:
+  - "application/json"
+securityDefinitions:
+  bearerAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+paths: 
+  # customers endpoints
+  /customers:
+    # get-customers
+    get:
+      tags:
+        - customers
+      summary: "get a list of all customers"
+      description: "Endpoint to get list of all customers in database."
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items: 
+              $ref: "#definitions/Customer"
+          examples:
+            application/json:
+              name: "Jane Doe"
+              id: 4
+              email: "janedoe@example.com"
+              phone: "123-456-7890"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                status: "error"
+                message: "Invalid input"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                error: "error"
+                message: "Token is missing | token has expiered | invalid token"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                error: "error"
+                message: "User does not have required role"
+      # security:
+      #   - bearerAuth: []
+
+    # post-customers
+    post:
+      tags:
+        - customers
+      summary: "Endpoint to add (post) a customer"
+      description: "Endpoint to add customer information to databse."
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Add customer information"
+          required: true
+          schema: 
+            $ref: "#/definitions/Customer"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/Customer"
+          examples:
+            application/json:
+              name: "Jane Doe"
+              id: 4
+              email: "janedoe@example.com"
+              phone: "123-456-7890"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                status: "error"
+                message: "Invalid input"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                error: "error"
+                message: "Token is missing | token has expiered | invalid token"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                error: "error"
+                message: "User does not have required role"
+      # security:
+      #   - bearerAuth: []
+
+  # ------------------------------------------------- #
+
+  # employee endpoints
+  /employees:
+    # get-employees
+    get:
+      tags:
+        - employees
+      summary: "get a list of all employees"
+      description: "Endpoint to get list of all employees in database."
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items: 
+              $ref: "#definitions/Employee"
+          examples:
+            application/json:
+              name: "Jane Doe"
+              id: 4
+              email: "janedoe@example.com"
+              phone: "123-456-7890"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                status: "error"
+                message: "Invalid input"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                error: "error"
+                message: "Token is missing | token has expiered | invalid token"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                error: "error"
+                message: "User does not have required role"
+      # security:
+      #   - bearerAuth: []
+
+    # post-employees
+    post:
+      tags:
+        - employees
+      summary: "Endpoint to add (post) an employee"
+      description: "Endpoint to add customer information to database."
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Add employee information"
+          required: true
+          schema: 
+            $ref: "#/definitions/Employee"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/Employee"
+          examples:
+            application/json:
+              name: "Jane Doe"
+              id: 2
+              position: "Director"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                status: "error"
+                message: "Invalid input"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                error: "error"
+                message: "Token is missing | token has expiered | invalid token"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                error: "error"
+                message: "User does not have required role"
+      # security:
+      #   - bearerAuth: []
+
+  # ------------------------------------------------- #
+
+  # product endpoints
+  /products:
+    # get-products
+    get:
+      tags:
+        - products
+      summary: "get a list of all products"
+      description: "Endpoint to get list of all products in database."
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items: 
+              $ref: "#definitions/Product"
+          examples:
+            application/json:
+              name: "Laptop"
+              id: 9
+              phone: 399.99
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                status: "error"
+                message: "Invalid input"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                error: "error"
+                message: "Token is missing | token has expiered | invalid token"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                error: "error"
+                message: "User does not have required role"
+      # security:
+      #   - bearerAuth: []
+
+    # post-products
+    post:
+      tags:
+        - products
+      summary: "Endpoint to add (post) a product"
+      description: "Endpoint to add product information to database."
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Add product information"
+          required: true
+          schema: 
+            $ref: "#/definitions/Product"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/Product"
+          examples:
+            application/json:
+              name: "Laptop"
+              id: 9
+              price: 399.99
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                status: "error"
+                message: "Invalid input"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                error: "error"
+                message: "Token is missing | token has expiered | invalid token"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                error: "error"
+                message: "User does not have required role"
+      # security:
+      #   - bearerAuth: []
+
+  # ------------------------------------------------- #
+
+  # production endpoints
+  /productions:
+    # get-productions
+    get:
+      tags:
+        - productions
+      summary: "get a list of all productions"
+      description: "Endpoint to get list of all productions in database."
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items: 
+              $ref: "#definitions/Production"
+          examples:
+            application/json:
+              employee_id: 3
+              product_id: 1
+              id: 5
+              quantity_produced: 300
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                status: "error"
+                message: "Invalid input"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                error: "error"
+                message: "Token is missing | token has expiered | invalid token"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                error: "error"
+                message: "User does not have required role"
+      # security:
+      #   - bearerAuth: []
+
+    # post-productions
+    post:
+      tags:
+        - productions
+      summary: "Endpoint to add (post) a production"
+      description: "Endpoint to add production information to database."
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Add production information"
+          required: true
+          schema: 
+            $ref: "#/definitions/Production"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/Production"
+          examples:
+            application/json:
+              employee_id: 3
+              product_id: 1
+              id: 5
+              quantity_produced: 300
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                status: "error"
+                message: "Invalid input"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                error: "error"
+                message: "Token is missing | token has expiered | invalid token"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                error: "error"
+                message: "User does not have required role"
+      # security:
+      #   - bearerAuth: []
+
+  # ------------------------------------------------- #
+
+  # order endpoints
+  /orders:
+    # get-orders
+    get:
+      tags:
+        - orders
+      summary: "get a list of all orders"
+      description: "Endpoint to get list of all orders in database."
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "array"
+            items: 
+              $ref: "#definitions/Order"
+          examples:
+            application/json:
+              date: "2023-12-25"
+              id: 13
+              customer_id: 2
+              total_price: 39.99
+              products: [
+                {
+                  "id": 1
+                }, 
+                {
+                  "id": 2
+                }
+              ]
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                status: "error"
+                message: "Invalid input"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                error: "error"
+                message: "Token is missing | token has expiered | invalid token"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                error: "error"
+                message: "User does not have required role"
+      # security:
+      #   - bearerAuth: []
+
+    # post-orders
+    post:
+      tags:
+        - orders
+      summary: "Endpoint to add (post) an order"
+      description: "Endpoint to add order information to database."
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Add order information"
+          required: true
+          schema: 
+            $ref: "#/definitions/Order"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/Order"
+          examples:
+            application/json:
+              date: "2023-12-25"
+              id: 13
+              customer_id: 2
+              total_price: 39.99
+              products: [
+                {
+                  "id": 1
+                }, 
+                {
+                  "id": 2
+                }
+              ]
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                status: "error"
+                message: "Invalid input"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                error: "error"
+                message: "Token is missing | token has expiered | invalid token"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                error: "error"
+                message: "User does not have required role"
+      # security:
+      #   - bearerAuth: []
+
+  # users endpoints
+  /users/login:
+    post:
+      tags:
+        - users
+      summary: "Login endpoint"
+      description: "Endpoint for user authentication."
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Credentials for login"
+          required: true
+          schema: 
+            $ref: "#/definitions/LoginCredentials"
+      responses:
+        200:
+          description: "Login successful"
+          schema:
+            $ref: "#/definitions/LoginResponse"
+          examples:
+            application/json:
+              value:
+                auth_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzIxMDEwNDEsImlhdCI6MTczMjAxNDY0MSwic3ViIjoiMiIsInJvbGVzIjpbXX0.s-6NKJMI8IuyIEn_yXsmnfoL74vwvYGjMwgV96JXm84"
+                message: "Login successful"
+                status: "success"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+          examples:
+            application/json:
+              value:
+                status: "error"
+                message: "Authentication Token is missing"
+
+definitions: 
+  Customer:
+    type: "object"
+    properties: 
+      name: 
+        type: "string"
+        description: "Customer name"
+      email:
+        type: "string"
+        description: "Customer email"
+      phone:
+        type: "string"
+        description: "Customer phone number"
+      id: 
+        type: "integer"
+        format: "int64"
+        description: "Customer unique ID (auto-generated on creation in database)"
+    required: 
+      - "name"
+      - "email"
+      - "phone"
+      - "id"
+
+  Employee:
+    type: "object"
+    properties: 
+      name: 
+        type: "string"
+        description: "Employee name"
+      position:
+        type: "string"
+        description: "Employee position"
+      id: 
+        type: "integer"
+        format: "int64"
+        description: "Employee unique ID (auto-generated on creation in database)"
+    required: 
+      - "name"
+      - "position"
+      - "id"
+
+  Product:
+    type: "object"
+    properties: 
+      name: 
+        type: "string"
+        description: "Product name"
+      price:
+        type: "float"
+        description: "Product price"
+      id: 
+        type: "integer"
+        format: "int64"
+        description: "Product unique ID (auto-generated on creation in database)"
+    required: 
+      - "name"
+      - "price"
+      - "id"
+
+  Production:
+    type: "object"
+    properties: 
+      employee_id: 
+        type: "integer"
+        format: "int64"
+        description: "Employee ID"
+      product_id:
+        type: "integer"
+        format: "int64"
+        description: "Product ID"
+      quantity_produced:
+        type: "integer"
+        format: "int64"
+        description: "Quantity produced"
+      id: 
+        type: "integer"
+        format: "int64"
+        description: "Production unique ID (auto-generated on creation in database)"
+    required: 
+      - "product_id"
+      - "employee_id"
+      - "quantity_produced"
+      - "id"
+
+  Order:
+    type: "object"
+    properties: 
+      date: 
+        type: "date"
+        format: "YYYY-MM-DD"
+        description: "Date of order (YYYY-MM-DD)"
+      customer_id:
+        type: "integer"
+        format: "int64"
+        description: "ID of customer placing order"
+      total_price:
+        type: "float"
+        description: "Total of order"
+      products:
+        type: "array"
+        description: "Array of products"
+      id: 
+        type: "integer"
+        format: "int64"
+        description: "Order unique ID (auto-generated on creation in database)"
+    required: 
+      - "date"
+      - "customer_id"
+      - "total_price"
+      - "products"
+      - "id"
+
+  LoginCredentials: 
+    type: "object"
+    properties: 
+      username: 
+        type: "string"
+        description: "Username"
+      password:
+        type: "string"
+        format: "password"
+        description: "Password"
+    required: 
+      - "username"
+      - "password"
+  LoginResponse:
+    type: "object"
+    properties:
+      auth_token:
+        type: "string"
+        description: "Authentication token"
+      message: 
+        type: "string"
+        description: "Message indicating succes of failure"
+      status: 
+        type: "string"
+        description: "Status of operation"
+    required:
+      - "auth_token"
+      - "message"
+  Error:
+    type: "object"
+    properties: 
+      status:
+        type: "string"
+        description: "Status of the error"
+      message: 
+        type: "string"
+        description: "Description of the error"
+    required:
+      - "status"
+      - "message"
